@@ -5,7 +5,7 @@ Simulator for [the Monty Hall problem](https://en.wikipedia.org/wiki/Monty_Hall_
 
 ## Setup
 
-requires ruby 2.7.0 or higher, and the gem `descriptive_statistics`.
+requires ruby 2.7.0 or higher, and bundler to be installed.
 
 
 ## Usage: Running a Single Simulation

@@ -1,3 +1,10 @@
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+  gem 'descriptive_statistics'
+end
+
 require 'date'
 require 'descriptive_statistics'
 
