@@ -11,16 +11,13 @@ requires ruby 2.7.0 or higher, and the gem `descriptive_statistics`.
 ## Usage: Running a Single Simulation
 
 ```
-ruby birthday_paradox.rb run_once_infinity
-ruby birthday_paradox.rb run_multiple_infinity <number of runs>
-ruby birthday_paradox.rb run_once_limited <room size limit>
-ruby birthday_paradox.rb run_multiple_limited <number of runs> <room size limit>
+ruby birthday_paradox.rb <number of runs> <room size limit>
 ```
 
 example output:
 
 ```
-ruby birthday_paradox.rb run_multiple_limited 1000 100
+ruby birthday_paradox.rb 1000 100
 # 1000 simulations run with rooms of 100 participants.
 # 1000 runs were successful, with a success rate of 100.0%.
 # Mean successful run required 24.5 participants.
