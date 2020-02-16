@@ -7,10 +7,13 @@ end
 
 require 'date'
 require 'descriptive_statistics'
+require 'ostruct'
 
 BIRTHDAYS = (1...365).map { |day_number| Date.strptime(day_number.to_s, "%j") }
 
-def run_once(limit: 366)
+Run = Struct.new(:successful?, :room_size, keyword_init: true)
+
+def run_once(limit:)
   birthday_match = nil
   birthdays = Set.new
 
@@ -19,12 +22,23 @@ def run_once(limit: 366)
     birthday_match = birthdays.add?(birthday) ? nil : birthday
   end
 
-  [ birthdays.length + 1, birthday_match ]
+  Run.new(
+    room_size: birthdays.length + 1,
+    successful?: !!birthday_match
+  )
 end
 
 run_count = (ARGV[0] || 1).to_i
 limit = (ARGV[1] || 365).to_i
-data = run_count.to_i.times.map { run_once(limit: limit) }.select(&:last).map(&:first)
+
+data = run_count.
+  times.
+  lazy.
+  map { run_once(limit: limit) }.
+  select(&:successful?).
+  map(&:room_size).
+  to_a
+
 rate = data.length / run_count.to_f * 100
 
 puts <<~EOS
