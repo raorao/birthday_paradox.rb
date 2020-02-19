@@ -11,13 +11,15 @@ requires ruby 2.7.0 or higher, and bundler to be installed.
 ## Usage: Running a Single Simulation
 
 ```
-ruby birthday_paradox.rb <number of runs> <room size limit>
+Usage: birthday_paradox.rb [options]
+    -l, --limit=LIMIT                Room size limit (default 365)
+    -r, --run-count=RUN_COUNT        Number of simulations (default 1)
 ```
 
 example output:
 
 ```
-ruby birthday_paradox.rb 1000 100
+ruby birthday_paradox.rb --run-count=1000 --limit=100
 # 1000 simulations run with rooms of 100 participants.
 # 1000 runs were successful, with a success rate of 100.0%.
 # Mean successful run required 24.5 participants.

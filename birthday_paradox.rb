@@ -8,6 +8,7 @@ end
 require 'date'
 require 'descriptive_statistics'
 require 'ostruct'
+require 'optparse'
 
 BIRTHDAYS = (1...365).map { |day_number| Date.strptime(day_number.to_s, "%j") }
 
@@ -28,21 +29,35 @@ def run_once(limit:)
   )
 end
 
-run_count = (ARGV[0] || 1).to_i
-limit = (ARGV[1] || 365).to_i
+options = {
+  run_count: 1,
+  limit: 365
+}
 
-data = run_count.
+OptionParser.new do |opts|
+  opts.banner = "Usage: birthday_paradox.rb [options]"
+
+  opts.on("-lLIMIT", "--limit=LIMIT", "Room size limit (default 365)") do |l|
+    options[:limit] = l.to_i
+  end
+
+  opts.on("-rRUN_COUNT", "--run-count=RUN_COUNT", "Number of simulations (default 1)") do |r|
+    options[:run_count] = r.to_i
+  end
+end.parse!
+
+data = options[:run_count].
   times.
   lazy.
-  map { run_once(limit: limit) }.
+  map { run_once(limit: options[:limit]) }.
   select(&:successful?).
   map(&:room_size).
   to_a
 
-rate = data.length / run_count.to_f * 100
+rate = data.length / options[:run_count].to_f * 100
 
 puts <<~EOS
-  #{run_count} simulations run with rooms of #{limit} participants.
+  #{options[:run_count]} simulations run with rooms of #{options[:limit]} participants.
   #{data.length} runs were successful, with a success rate of #{rate.round(2)}%.
 EOS
 
